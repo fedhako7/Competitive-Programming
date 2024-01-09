@@ -1,22 +1,17 @@
-class Solution(object):
-    def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        ans = 0
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        length = 0
+        count_s = defaultdict(int)
 
-        for l in range(len(s)):
-            checkList = []
-            r = l
+        l = 0
+        for i in range(len(s)):
+            count_s[s[i]] += 1
 
-            while r < len(s) and s[r] not in checkList:
-                checkList.append(s[r])
-                r += 1
-            tempLen = r - l
-            if tempLen > ans:
-                ans = tempLen
+            while count_s[s[i]] == 2:
+                count_s[s[l]] -= 1
+                l += 1
+                
+            curr_count = i - l + 1
+            length = max(length, curr_count)
 
-        return ans
-
-        
+        return length
